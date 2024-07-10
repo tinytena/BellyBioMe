@@ -20,6 +20,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "bellybiome-env.eba-46pp858m.us-east-1.elasticbeanstalk.com",
+    "172.31.34.198",
 ]
 
 # CACHES
