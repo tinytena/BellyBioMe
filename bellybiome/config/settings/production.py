@@ -21,9 +21,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "bellybiome-env.eba-46pp858m.us-east-1.elasticbeanstalk.com",
     "belly-biome.com",
-    "www.belly-biome.com",
 ]
 
 # DATABASES
