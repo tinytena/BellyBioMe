@@ -198,11 +198,5 @@ LOGGING = {
     },
 }
 
-# Sentry
-# ------------------------------------------------------------------------------
-# SENTRY_DSN = env("SENTRY_DSN")
-# SENTRY_LOG_LEVEL = env.int("DJANGO_SENTRY_LOG_LEVEL", logging.INFO)
-
-
 # Your stuff...
 # ------------------------------------------------------------------------------
