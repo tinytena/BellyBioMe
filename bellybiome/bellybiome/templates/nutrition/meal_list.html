@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Meal List
+{% endblock title %}
+<body>
+  <h1>Meal List</h1>
+  <ul>
+    {% for meal in meals %}<li>{{ meal.name }}: {{ meal.calories }} calories</li>{% endfor %}
+  </ul>
+</body>

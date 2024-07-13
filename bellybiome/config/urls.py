@@ -21,9 +21,9 @@ urlpatterns = [
     path("users/", include("bellybiome.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    # ...
+    path("nutrition/", include("bellybiome.nutrition.urls"))
     # Media files
-    *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+    * static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development

@@ -1,6 +1,7 @@
 
 .env
 *.DS_Store
+tree.txt
 
 ### Python template
 # Byte-compiled / optimized / DLL files
