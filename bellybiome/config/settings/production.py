@@ -17,7 +17,13 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["belly-biome.com"])
+# ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["belly-biome.com"])
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "bellybiome-env.eba-46pp858m.us-east-1.elasticbeanstalk.com",
+    "belly-biome.com",
+]
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -142,7 +148,14 @@ INSTALLED_APPS += ["anymail"]
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
 # https://anymail.readthedocs.io/en/stable/esps/amazon_ses/
 EMAIL_BACKEND = "anymail.backends.amazon_ses.EmailBackend"
-ANYMAIL = {}
+
+ANYMAIL = {
+    "AMAZON_SES_CLIENT_PARAMS": {
+        "aws_access_key_id": env("SES_AWS_ACCESS_KEY_ID"),
+        "aws_secret_access_key": env("SES_AWS_SECRET_ACCESS_KEY"),
+        "region_name": env("SES_AWS_REGION_NAME"),
+    },
+}
 
 # django-compressor
 # ------------------------------------------------------------------------------
