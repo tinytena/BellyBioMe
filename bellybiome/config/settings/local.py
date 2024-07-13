@@ -21,6 +21,7 @@ ALLOWED_HOSTS = [
     "bellybiome-env.eba-46pp858m.us-east-1.elasticbeanstalk.com",
     "172.31.34.198",
     "34.232.213.72",
+    "54.173.182.128",
 ]
 
 # CACHES
