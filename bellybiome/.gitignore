@@ -1,6 +1,7 @@
 
 .env
 *.DS_Store
+.DS_Store
 tree.txt
 
 ### Python template
