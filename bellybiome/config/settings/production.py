@@ -16,6 +16,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "belly-biome.com",
+    "bellybiome-environment.eba-ee9cmxj7.us-east-1.elasticbeanstalk.com",
 ]
 
 # DATABASES
