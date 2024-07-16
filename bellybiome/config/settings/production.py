@@ -5,7 +5,6 @@ from .base import *  # noqa: F403
 from .base import DATABASES
 from .base import INSTALLED_APPS
 from .base import env
-from .base import BASE_DIR, APPS_DIR
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -14,8 +13,10 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 # ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["belly-biome.com"])
 ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
     "belly-biome.com",
-    "www.belly-biome.com",
+    "bellybiome-environment.eba-ee9cmxj7.us-east-1.elasticbeanstalk.com",
 ]
 
 # DATABASES
@@ -108,8 +109,7 @@ STORAGES = {
     },
 }
 
-STATIC_ROOT = str(BASE_DIR / "staticfiles")
-MEDIA_ROOT = str(APPS_DIR / "media")
+STATIC_ROOT = "/var/app/current/staticfiles"
 
 MEDIA_URL = f"https://{aws_s3_domain}/media/"
 STATIC_URL = f"https://{aws_s3_domain}/static/"
