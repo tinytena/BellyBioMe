@@ -15,6 +15,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 # ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["belly-biome.com"])
 ALLOWED_HOSTS = [
     "belly-biome.com",
+    "www.belly-biome.com",
 ]
 
 # DATABASES
@@ -98,12 +99,6 @@ aws_s3_domain = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 
 # STATIC & MEDIA
 # ------------------------
-STATIC_ROOT = str(BASE_DIR / "staticfiles")
-STATIC_URL = f"https://{aws_s3_domain}/static/"
-
-MEDIA_ROOT = str(APPS_DIR / "media")
-MEDIA_URL = f"https://{aws_s3_domain}/media/"
-
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
@@ -112,6 +107,12 @@ STORAGES = {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
     },
 }
+
+STATIC_ROOT = str(BASE_DIR / "staticfiles")
+MEDIA_ROOT = str(APPS_DIR / "media")
+
+MEDIA_URL = f"https://{aws_s3_domain}/media/"
+STATIC_URL = f"https://{aws_s3_domain}/static/"
 
 # EMAIL
 # ------------------------------------------------------------------------------
