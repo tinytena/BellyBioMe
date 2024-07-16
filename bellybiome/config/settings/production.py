@@ -5,7 +5,6 @@ from .base import *  # noqa: F403
 from .base import DATABASES
 from .base import INSTALLED_APPS
 from .base import env
-from .base import BASE_DIR
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -103,14 +102,21 @@ aws_s3_domain = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 # ------------------------
 STORAGES = {
     "default": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "location": "media",
+            "file_overwrite": False,
+        },
     },
     "staticfiles": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "location": "static",
+        },
     },
 }
 
-STATIC_ROOT = str(BASE_DIR / "staticfiles")
+STATIC_ROOT = "/var/app/current/static/"
 
 MEDIA_URL = f"https://{aws_s3_domain}/media/"
 STATIC_URL = f"https://{aws_s3_domain}/static/"
