@@ -5,6 +5,7 @@ from .base import *  # noqa: F403
 from .base import DATABASES
 from .base import INSTALLED_APPS
 from .base import env
+from .base import BASE_DIR
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -109,7 +110,7 @@ STORAGES = {
     },
 }
 
-STATIC_ROOT = "/var/app/current/staticfiles"
+STATIC_ROOT = str(BASE_DIR / "staticfiles")
 
 MEDIA_URL = f"https://{aws_s3_domain}/media/"
 STATIC_URL = f"https://{aws_s3_domain}/static/"
