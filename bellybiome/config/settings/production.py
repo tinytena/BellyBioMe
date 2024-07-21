@@ -21,6 +21,7 @@ ALLOWED_HOSTS = [
     "awseb--awseb-dhvgq8z1elmp-1632378758.us-east-1.elb.amazonaws.com",
     "bellybiome-env.eba-347hjqyk.us-east-1.elasticbeanstalk.com",
     "172.31.45.114",
+    "72.44.43.197",
 ]
 
 # DATABASES
