@@ -18,6 +18,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "belly-biome.com",
     "www.belly-biome.com",
+    "awseb--awseb-dhvgq8z1elmp-1632378758.us-east-1.elb.amazonaws.com",
     "bellybiome-env.eba-347hjqyk.us-east-1.elasticbeanstalk.com",
     "172.31.45.114",
 ]
