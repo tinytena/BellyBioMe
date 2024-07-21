@@ -245,9 +245,9 @@ EMAIL_TIMEOUT = 5
 # Django Admin URL.
 ADMIN_URL = "admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""Christian Wondirad Mandefro""", "christianwondirad1213@gmail.com")]
+# ADMINS = [("""Christian Wondirad Mandefro""", "christianwondirad1213@gmail.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
-MANAGERS = ADMINS
+# MANAGERS = ADMINS
 # https://cookiecutter-django.readthedocs.io/en/latest/settings.html#other-environment-settings
 # Force the `admin` sign in process to go through the `django-allauth` workflow
 DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=False)

@@ -22,6 +22,7 @@ ALLOWED_HOSTS = [
     "bellybiome-env.eba-347hjqyk.us-east-1.elasticbeanstalk.com",
     "172.31.45.114",
     "72.44.43.197",
+    "23.20.253.226",
 ]
 
 # DATABASES
@@ -182,6 +183,13 @@ LOGGING = {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s",
         },
+        "simple": {
+            "format": "%(levelname)s %(message)s",
+        },
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[%(server_time)s] %(message)s",
+        },
     },
     "handlers": {
         "console": {
@@ -189,25 +197,45 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
-        "file": {
-            "level": "ERROR",
-            "class": "logging.FileHandler",
-            "filename": "/var/app/current/django_errors.log",  # Change to a writable directory
+        "log_file": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "/var/app/current/django_errors.log",
+            "maxBytes": 16777216,  # 16 megabytes
+            "backupCount": 4,
             "formatter": "verbose",
+        },
+        "django.server": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "django.server",
+        },
+    },
+    "loggers": {
+        "django.security.DisallowedHost": {
+            "handlers": ["console"],
+            "propagate": False,
+        },
+        "django.server": {
+            "handlers": ["django.server"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "cl": {
+            "handlers": ["log_file"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django.db.backends": {
+            "level": "ERROR",
+            "handlers": ["console", "log_file"],
+            "propagate": False,
         },
     },
     "root": {
         "level": "INFO",
-        "handlers": ["console", "file"],
-    },
-    "loggers": {
-        "django.db.backends": {
-            "level": "ERROR",
-            "handlers": ["console", "file"],
-            "propagate": False,
-        },
+        "handlers": ["console", "log_file"],
     },
 }
-
 # Your stuff...
 # ------------------------------------------------------------------------------

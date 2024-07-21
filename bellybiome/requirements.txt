@@ -37,3 +37,5 @@ django-storages==1.14.3  # https://github.com/jschneier/django-storages
 django-anymail==11.0  # https://github.com/anymail/django-anymail
 django-amazon-ses==4.0.1
 boto3==1.34.145
+
+sentry-sdk==2.7.1
