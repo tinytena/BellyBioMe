@@ -187,7 +187,7 @@ LOGGING = {
         "file": {
             "level": "ERROR",
             "class": "logging.FileHandler",
-            "filename": "/var/log/django_errors.log",
+            "filename": "/var/app/current/django_errors.log",  # Change to a writable directory
             "formatter": "verbose",
         },
     },
