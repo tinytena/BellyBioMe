@@ -5,7 +5,8 @@
 tree.txt
 .png
 *.png
-
+.ico
+*.ico
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
