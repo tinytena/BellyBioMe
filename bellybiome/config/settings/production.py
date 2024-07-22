@@ -7,16 +7,19 @@ from .base import INSTALLED_APPS
 from .base import env
 from .base import APPS_DIR, BASE_DIR
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-# ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["belly-biome.com"])
-ALLOWED_HOSTS = [
-    "belly-biome.com",
-    "www.belly-biome.com",
-]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "belly-biome.com,www.belly-biome.com").split(
+    ","
+)
 
 # DATABASES
 # ------------------------------------------------------------------------------
