@@ -1,25 +1,19 @@
 # ruff: noqa: E501
 
-
 from .base import *  # noqa: F403
 from .base import DATABASES
 from .base import INSTALLED_APPS
 from .base import env
 from .base import APPS_DIR, BASE_DIR
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv(os.path.join(BASE_DIR, ".env"))
-
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "belly-biome.com,www.belly-biome.com").split(
-    ","
-)
+ALLOWED_HOSTS = env(
+    "ALLOWED_HOSTS", default="belly-biome.com,www.belly-biome.com"
+).split(",")
 
 # DATABASES
 # ------------------------------------------------------------------------------
