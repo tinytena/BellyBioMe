@@ -52,8 +52,6 @@ CSRF_COOKIE_NAME = "__Secure-csrftoken"
 CSRF_TRUSTED_ORIGINS = [
     "https://belly-biome.com",
     "https://www.belly-biome.com",
-    "http://belly-biome.com",
-    "http://www.belly-biome.com",
 ]
 # https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
