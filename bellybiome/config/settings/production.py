@@ -7,6 +7,7 @@ from .base import env
 from .base import APPS_DIR, BASE_DIR
 
 # GENERAL
+READ_DOT_ENV_FILE = False
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
@@ -86,7 +87,6 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 ]
-
 
 # WhiteNoise
 # ------------------------------------------------------------------------------
