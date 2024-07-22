@@ -49,8 +49,12 @@ SESSION_COOKIE_NAME = "__Secure-sessionid"
 CSRF_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-name
 CSRF_COOKIE_NAME = "__Secure-csrftoken"
-CSRF_TRUSTED_ORIGINS = ["belly-biome.com", "www.belly-biome.com"]
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://belly-biome.com",
+    "https://www.belly-biome.com",
+    "http://belly-biome.com",
+    "http://www.belly-biome.com",
+]
 # https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
 # TODO: set this to 60 seconds first and then to 518400 once you prove the former works
@@ -192,7 +196,7 @@ LOGGING = {
         "log_file": {
             "level": "DEBUG",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "/var/app/current/django_errors.log",
+            "filename": "django_errors.log",
             "maxBytes": 16777216,  # 16 megabytes
             "backupCount": 4,
             "formatter": "verbose",
