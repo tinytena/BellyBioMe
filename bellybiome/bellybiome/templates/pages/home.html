@@ -1,3 +1,51 @@
 {% extends "base.html" %}
 
-
+{% block title %}
+  Home - BellyBioMe
+{% endblock title %}
+{% block bodyclass %}
+  bg-light
+{% endblock bodyclass %}
+{% block body %}
+  <div class="container py-5">
+    <div class="jumbotron text-center">
+      <h1 class="display-4">Welcome back, {{ request.user.username }}!</h1>
+      <p class="lead">Track your nutrition, monitor your health, and get personalized feedback.</p>
+      <hr class="my-4" />
+      <a class="btn btn-primary btn-lg" href="" role="button">Track Meals</a>
+      <a class="btn btn-success btn-lg" href="" role="button">Monitor Health</a>
+      <a class="btn btn-info btn-lg" href="" role="button">Get Feedback</a>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <div class="card border-primary">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Track Your Meals</h5>
+            <p class="card-text">Easily log your meals and snacks to keep track of your nutritional intake.</p>
+            <a href="" class="btn btn-primary">Start Tracking</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-success">
+          <div class="card-body">
+            <h5 class="card-title text-success">Monitor Your Health</h5>
+            <p class="card-text">
+              Keep an eye on your health metrics, including energy levels, sleep quality, mood, and bowel movements.
+            </p>
+            <a href="" class="btn btn-success">Start Monitoring</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-info">
+          <div class="card-body">
+            <h5 class="card-title text-info">Get Personalized Feedback</h5>
+            <p class="card-text">Receive tailored advice and recommendations based on your tracked data.</p>
+            <a href="" class="btn btn-info">Get Feedback</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

@@ -1,3 +1,63 @@
 {% extends "base.html" %}
 
-
+{% block title %}
+  About Us - BellyBioMe
+{% endblock title %}
+{% block bodyclass %}
+  bg-light
+{% endblock bodyclass %}
+{% block body %}
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h1 class="display-4 text-primary">About BellyBioMe</h1>
+      <p class="lead text-muted">Your journey to a healthier life starts here.</p>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="h3 text-success">Our Mission</h2>
+        <p class="text-muted">
+          At BellyBioMe, our mission is to empower you to take control of your nutrition and wellness through insightful tracking and personalized feedback.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <h2 class="h3 text-warning">Our Vision</h2>
+        <p class="text-muted">
+          We envision a world where everyone has access to the tools and knowledge they need to live healthier, happier lives.
+        </p>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <div class="card border-primary">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Track Your Meals</h5>
+            <p class="card-text">Easily log your meals and snacks to keep track of your nutritional intake.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-success">
+          <div class="card-body">
+            <h5 class="card-title text-success">Monitor Your Health</h5>
+            <p class="card-text">
+              Keep an eye on your health metrics, including energy levels, sleep quality, mood, and bowel movements.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-danger">
+          <div class="card-body">
+            <h5 class="card-title text-danger">Get Personalized Feedback</h5>
+            <p class="card-text">Receive tailored advice and recommendations based on your tracked data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <a href="{% url 'account_signup' %}" class="btn btn-lg btn-primary">Join Us Today</a>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
