@@ -194,7 +194,7 @@ LOGGING = {
         "log_file": {
             "level": "DEBUG",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "/var/app/current/django_errors.log",
+            "filename": "django_errors.log",
             "maxBytes": 16777216,  # 16 megabytes
             "backupCount": 4,
             "formatter": "verbose",
