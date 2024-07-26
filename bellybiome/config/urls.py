@@ -23,8 +23,8 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path("users/", include("bellybiome.users.urls", namespace="users")),
-    path("accounts/", include("allauth.urls")),
+    path("u/", include("bellybiome.users.urls", namespace="users")),
+    path("a/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     path("nutrition/", include("bellybiome.nutrition.urls")),
     # Media files
@@ -56,7 +56,7 @@ if settings.DEBUG:
         ),
         path("500/", default_views.server_error),
     ]
-    # if "debug_toolbar" in settings.INSTALLED_APPS:
-    # import debug_toolbar
+    if "debug_toolbar" in settings.INSTALLED_APPS:
+        import debug_toolbar
 
-    # urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+        urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns

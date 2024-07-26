@@ -180,55 +180,47 @@ LOGGING = {
         "simple": {
             "format": "%(levelname)s %(message)s",
         },
-        "django.server": {
-            "()": "django.utils.log.ServerFormatter",
-            "format": "[%(server_time)s] %(message)s",
-        },
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
+            "level": "WARNING",
             "class": "logging.StreamHandler",
-            "formatter": "verbose",
+            "formatter": "simple",
         },
-        "log_file": {
-            "level": "DEBUG",
+        "file": {
+            "level": "WARNING",
             "class": "logging.handlers.RotatingFileHandler",
             "filename": "/var/app/current/django_errors.log",
             "maxBytes": 16777216,  # 16 megabytes
             "backupCount": 4,
             "formatter": "verbose",
         },
-        "django.server": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "django.server",
-        },
     },
     "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
         "django.security.DisallowedHost": {
+            "level": "ERROR",
             "handlers": ["console"],
             "propagate": False,
         },
-        "django.server": {
-            "handlers": ["django.server"],
-            "level": "INFO",
+        "django.request": {
+            "handlers": ["file"],
+            "level": "ERROR",
             "propagate": False,
         },
-        "cl": {
-            "handlers": ["log_file"],
-            "level": "INFO",
-            "propagate": True,
-        },
         "django.db.backends": {
+            "handlers": ["file"],
             "level": "ERROR",
-            "handlers": ["console", "log_file"],
             "propagate": False,
         },
     },
     "root": {
-        "level": "INFO",
-        "handlers": ["console", "log_file"],
+        "handlers": ["console", "file"],
+        "level": "WARNING",
     },
 }
 # Your stuff...
