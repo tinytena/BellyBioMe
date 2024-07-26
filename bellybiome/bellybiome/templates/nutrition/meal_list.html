@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}
-  Meal List
-{% endblock title %}
-<body>
-  <h1>Meal List</h1>
-  <ul>
-    {% for meal in meals %}<li>{{ meal.name }}: {{ meal.calories }} calories</li>{% endfor %}
-  </ul>
-</body>
+{% block content %}
+  <h1>My Meals</h1>
+  <a href="{% url 'meal_create' %}" class="btn btn-primary mb-3">Add New Meal</a>
+  <div class="row">
+    {% for meal in meals %}
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ meal.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ meal.get_meal_type_display }} - {{ meal.date }}</h6>
+            <p class="card-text">{{ meal.calories }} calories</p>
+            <a href="{% url 'meal_detail' meal.pk %}" class="card-link">View Details</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No meals logged yet. Start by adding a new meal!</p>
+    {% endfor %}
+  </div>
+{% endblock content %}

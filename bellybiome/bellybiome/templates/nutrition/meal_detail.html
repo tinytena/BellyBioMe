@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ meal.name }}</h1>
+  <p>{{ meal.get_meal_type_display }} - {{ meal.date }}</p>
+  <p>{{ meal.calories }} calories</p>
+  <p>{{ meal.description }}</p>
+  <a href="{% url 'meal_update' meal.pk %}" class="btn btn-primary">Edit Meal</a>
+  <a href="{% url 'meal_delete' meal.pk %}" class="btn btn-danger">Delete Meal</a>
+  <h2>Feedback</h2>
+  {% if meal.feedback %}
+    <p>Energy Level: {{ meal.feedback.energy_level }}/5</p>
+    <p>Sleep Quality: {{ meal.feedback.sleep_quality }}/5</p>
+    <p>Mood: {{ meal.feedback.mood }}/5</p>
+    <p>Bowel Movements: {{ meal.feedback.bowel_movements }}</p>
+  {% else %}
+    <p>
+      No feedback yet. <a href="{% url 'feedback_create' meal.pk %}">Add Feedback</a>
+    </p>
+  {% endif %}
+  <h2>Gut Reaction</h2>
+  {% if meal.gutreaction %}
+    <p>Reaction: {{ meal.gutreaction.get_reaction_display }}</p>
+    <p>Notes: {{ meal.gutreaction.reaction_notes }}</p>
+  {% else %}
+    <p>
+      No gut reaction yet. <a href="{% url 'gut_reaction_create' meal.pk %}">Add Gut Reaction</a>
+    </p>
+  {% endif %}
+  <a href="{% url 'meal_list' %}" class="btn btn-secondary mt-3">Back to Meal List</a>
+{% endblock content %}
