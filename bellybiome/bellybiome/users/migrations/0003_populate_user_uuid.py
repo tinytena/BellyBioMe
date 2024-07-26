@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('users', '0002_user_uuid'),  # Ensure this matches the previous migration
     ]
+    
     operations = [
         migrations.RunPython(generate_uuids, migrations.RunPython.noop),
     ]
