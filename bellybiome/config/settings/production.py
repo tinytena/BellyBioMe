@@ -7,7 +7,7 @@ from .base import env
 from .base import APPS_DIR, BASE_DIR
 
 # GENERAL
-READ_DOT_ENV_FILE = False
+READ_DOT_ENV_FILE = env("READ_DOT_ENV_FILE")
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
@@ -190,7 +190,7 @@ LOGGING = {
         "file": {
             "level": "WARNING",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "/var/app/current/django_errors.log",
+            "filename": "django_errors.log",
             "maxBytes": 16777216,  # 16 megabytes
             "backupCount": 4,
             "formatter": "verbose",

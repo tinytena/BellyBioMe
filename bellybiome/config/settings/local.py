@@ -5,6 +5,8 @@ from .base import INSTALLED_APPS
 from .base import MIDDLEWARE
 from .base import env
 
+READ_DOT_ENV_FILE = True
+
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
