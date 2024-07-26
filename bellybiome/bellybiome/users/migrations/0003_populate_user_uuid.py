@@ -11,10 +11,15 @@ def generate_uuids(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0002_user_uuid'),  # Ensure this matches the previous migration
+        ('users', '0002_user_uuid'),
     ]
-    
+
     operations = [
         migrations.RunPython(generate_uuids, migrations.RunPython.noop),
+        migrations.AlterField(
+            model_name="user",
+            name="uuid",
+            field=models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+        ),
     ]
  
