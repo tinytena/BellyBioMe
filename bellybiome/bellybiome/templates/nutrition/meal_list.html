@@ -3,6 +3,7 @@
 {% block content %}
   <h1>My Meals</h1>
   <a href="{% url 'meal_create' %}" class="btn btn-primary mb-3">Add New Meal</a>
+  <a href="{% url 'scan_barcode' %}" class="btn btn-secondary p-2">Scan Barcode</a>
   <div class="row">
     {% for meal in meals %}
       <div class="col-md-4 mb-3">

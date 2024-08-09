@@ -35,6 +35,8 @@
       <!-- place project specific Javascript in this file -->
       {% compress js %}
         <script defer src="{% static 'js/project.js' %}"></script>
+        <!-- scan_barcode.html -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
       {% endcompress %}
     {% endblock javascript %}
   </head>
