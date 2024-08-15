@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+  <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'meal_list' %}">Meals</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'meal_detail' meal.pk %}">{{ meal.name }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Delete Confirmation</li>
+      </ol>
+    </nav>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow">
+          <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">
+              <i class="fas fa-exclamation-triangle me-2"></i>Confirm Deletion
+            </h4>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">You are about to delete the following meal:</h5>
+            <p class="card-text">
+              <strong>{{ meal.name }}</strong>
+              <br />
+              <small class="text-muted">
+                <i class="fas fa-calendar-alt me-1"></i> {{ meal.date|date:"F d, Y" }} |
+                <i class="fas fa-utensils me-1"></i> {{ meal.get_meal_type_display }}
+              </small>
+            </p>
+            <div class="alert alert-warning" role="alert">
+              <i class="fas fa-info-circle me-2"></i>This action cannot be undone. Are you sure you want to proceed?
+            </div>
+            <form method="post">
+              {% csrf_token %}
+              <div class="d-flex justify-content-end">
+                <a href="{% url 'meal_detail' meal.pk %}"
+                   class="btn btn-outline-secondary me-2">
+                  <i class="fas fa-times me-1"></i>Cancel
+                </a>
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-trash-alt me-1"></i>Delete Meal
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block extra_css %}
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .card {
+      border: none;
+      border-radius: 10px;
+    }
+
+    .card-header {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+  </style>
+{% endblock extra_css %}

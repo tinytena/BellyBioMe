@@ -23,6 +23,7 @@
       <!-- This file stores project-specific CSS -->
       {% compress css %}
         <link href="{% static 'css/project.css' %}" rel="stylesheet" />
+        <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}" />
       {% endcompress %}
     {% endblock css %}
     <!-- Le javascript
@@ -35,12 +36,11 @@
       <!-- place project specific Javascript in this file -->
       {% compress js %}
         <script defer src="{% static 'js/project.js' %}"></script>
-        <!-- scan_barcode.html -->
-        <script src="{% static 'js/quagga0.12.1.min.js' %}"></script>
       {% endcompress %}
     {% endblock javascript %}
   </head>
   <body class="{% block bodyclass %}{% endblock bodyclass %}">
+    {% csrf_token %}
     <div class="mb-1">
       <nav class="navbar navbar-expand-md">
         <div class="container-fluid">

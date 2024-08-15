@@ -1,11 +1,122 @@
 {% extends "base.html" %}
 
+{% load static %}
+{% load widget_tweaks %}
+
 {% block content %}
-  <h1>Add Feedback for {{ meal.name }}</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a href="{% url 'meal_detail' meal.pk %}" class="btn btn-secondary">Cancel</a>
-  </form>
+  <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'meal_list' %}">Meals</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'meal_detail' meal.pk %}">{{ meal.name }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Add Feedback</li>
+      </ol>
+    </nav>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h1 class="card-title mb-4">
+              <i class="fas fa-comment-alt me-2"></i>Add Feedback for {{ meal.name }}
+            </h1>
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+                <div class="mb-3">
+                  <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                  {% if field.name in 'energy_level,sleep_quality,mood' %}
+                    <div class="rating">
+                      {% for i in "12345" %}
+                        <input type="radio"
+                               id="{{ field.name }}_{{ forloop.counter }}"
+                               name="{{ field.name }}"
+                               value="{{ forloop.counter }}"
+                               {% if field.value == forloop.counter|stringformat:"s" %}checked{% endif %} />
+                        <label for="{{ field.name }}_{{ forloop.counter }}"
+                               title="{{ forloop.counter }} stars">
+                          <i class="fas fa-star"></i>
+                        </label>
+                      {% endfor %}
+                    </div>
+                    <div class="rating-text mt-1">
+                      <span class="rating-low">1 star: Low</span>
+                      <span class="rating-high">5 stars: High</span>
+                    </div>
+                  {% else %}
+                    {{ field|add_class:"form-control" }}
+                  {% endif %}
+                  {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+                  {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+              {% endfor %}
+              <div class="mt-4">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save me-1"></i>Save
+                </button>
+                <a href="{% url 'meal_detail' meal.pk %}"
+                   class="btn btn-outline-secondary ms-2">
+                  <i class="fas fa-times me-1"></i>Cancel
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
+{% block extra_css %}
+  <style>
+    .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .rating {
+      display: inline-flex;
+      flex-direction: row-reverse;
+      justify-content: center;
+    }
+
+    .rating input {
+      display: none;
+    }
+
+    .rating label {
+      cursor: pointer;
+      font-size: 2rem;
+      padding: 0 0.1em;
+      color: #ffd700;
+      /* Default gold color */
+      transition: color 0.2s;
+    }
+
+    .rating label:hover,
+    .rating label:hover~label,
+    .rating input:checked~label {
+      color: #ffd700;
+      /* Gold color for selected and hovered stars */
+    }
+
+    .rating input:checked+label~label {
+      color: #666;
+      /* Darker gray for unselected stars */
+    }
+
+    .rating:hover input:checked+label~label {
+      color: #ffd700;
+      /* Gold color when hovering after selection */
+    }
+
+    .rating-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #495057;
+    }
+  </style>
+{% endblock extra_css %}

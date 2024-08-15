@@ -1,11 +1,59 @@
 {% extends "base.html" %}
 
+{% load static %}
+{% load widget_tweaks %}
+
 {% block content %}
-  <h1>Add Gut Reaction for {{ meal.name }}</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a href="{% url 'meal_detail' meal.pk %}" class="btn btn-secondary">Cancel</a>
-  </form>
+  <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'meal_list' %}">Meals</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'meal_detail' meal.pk %}">{{ meal.name }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Add Gut Reaction</li>
+      </ol>
+    </nav>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h1 class="card-title mb-4">
+              <i class="fas fa-stomach me-2"></i>Add Gut Reaction for {{ meal.name }}
+            </h1>
+            <form method="post">
+              {% csrf_token %}
+              {% for field in form %}
+                <div class="mb-3">
+                  <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                  {{ field|add_class:"form-control" }}
+                  {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+                  {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+              {% endfor %}
+              <div class="mt-4">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save me-1"></i>Save
+                </button>
+                <a href="{% url 'meal_detail' meal.pk %}"
+                   class="btn btn-outline-secondary ms-2">
+                  <i class="fas fa-times me-1"></i>Cancel
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
+{% block extra_css %}
+  <style>
+    .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  </style>
+{% endblock extra_css %}

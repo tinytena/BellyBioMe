@@ -1,31 +1,120 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
-  <h1>{{ meal.name }}</h1>
-  <p>{{ meal.get_meal_type_display }} - {{ meal.date }}</p>
-  <p>{{ meal.calories }} calories</p>
-  <p>{{ meal.description }}</p>
-  <a href="{% url 'meal_update' meal.pk %}" class="btn btn-primary">Edit Meal</a>
-  <a href="{% url 'meal_delete' meal.pk %}" class="btn btn-danger">Delete Meal</a>
-  <h2>Feedback</h2>
-  {% if meal.feedback %}
-    <p>Energy Level: {{ meal.feedback.energy_level }}/5</p>
-    <p>Sleep Quality: {{ meal.feedback.sleep_quality }}/5</p>
-    <p>Mood: {{ meal.feedback.mood }}/5</p>
-    <p>Bowel Movements: {{ meal.feedback.bowel_movements }}</p>
-  {% else %}
-    <p>
-      No feedback yet. <a href="{% url 'feedback_create' meal.pk %}">Add Feedback</a>
-    </p>
-  {% endif %}
-  <h2>Gut Reaction</h2>
-  {% if meal.gutreaction %}
-    <p>Reaction: {{ meal.gutreaction.get_reaction_display }}</p>
-    <p>Notes: {{ meal.gutreaction.reaction_notes }}</p>
-  {% else %}
-    <p>
-      No gut reaction yet. <a href="{% url 'gut_reaction_create' meal.pk %}">Add Gut Reaction</a>
-    </p>
-  {% endif %}
-  <a href="{% url 'meal_list' %}" class="btn btn-secondary mt-3">Back to Meal List</a>
+  {% csrf_token %}
+  <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'meal_list' %}">Meals</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ meal.name }}</li>
+      </ol>
+    </nav>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h1 class="card-title">{{ meal.name }}</h1>
+            <h6 class="card-subtitle mb-2 text-muted">
+              <i class="fas fa-utensils me-2"></i>{{ meal.get_meal_type_display }} -
+              <i class="far fa-calendar-alt me-2"></i>{{ meal.date|date:"F d, Y" }}
+            </h6>
+            <p class="card-text">
+              <i class="fas fa-fire-alt me-2"></i><strong>{{ meal.calories }}</strong> calories
+            </p>
+            <p class="card-text">{{ meal.description }}</p>
+            <div class="mt-3">
+              <a href="{% url 'meal_update' meal.pk %}"
+                 class="btn btn-outline-primary btn-sm me-2">
+                <i class="fas fa-edit me-1"></i>Edit Meal
+              </a>
+              <a href="{% url 'meal_delete' meal.pk %}"
+                 class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-trash-alt me-1"></i>Delete Meal
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-comment-alt me-2"></i>Feedback
+            </h5>
+            {% if meal.feedback %}
+              <div class="mb-2">
+                <strong>Energy Level:</strong>
+                <div class="rating">
+                  {% for i in "12345" %}
+                    <i class="fas fa-star{% if forloop.counter <= meal.feedback.energy_level %} text-warning{% else %} text-muted{% endif %}"></i>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="mb-2">
+                <strong>Sleep Quality:</strong>
+                <div class="rating">
+                  {% for i in "12345" %}
+                    <i class="fas fa-star{% if forloop.counter <= meal.feedback.sleep_quality %} text-warning{% else %} text-muted{% endif %}"></i>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="mb-2">
+                <strong>Mood:</strong>
+                <div class="rating">
+                  {% for i in "12345" %}
+                    <i class="fas fa-star{% if forloop.counter <= meal.feedback.mood %} text-warning{% else %} text-muted{% endif %}"></i>
+                  {% endfor %}
+                </div>
+              </div>
+              <p>
+                <strong>Bowel Movements:</strong> {{ meal.feedback.bowel_movements }}
+              </p>
+            {% else %}
+              <p class="card-text">No feedback yet.</p>
+              <a href="{% url 'feedback_create' meal.pk %}"
+                 class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-plus me-1"></i>Add Feedback
+              </a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-stomach me-2"></i>Gut Reaction
+            </h5>
+            {% if meal.gutreaction %}
+              <p>
+                <strong>Reaction:</strong> {{ meal.gutreaction.get_reaction_display }}
+              </p>
+              <p>
+                <strong>Notes:</strong> {{ meal.gutreaction.reaction_notes }}
+              </p>
+            {% else %}
+              <p class="card-text">No gut reaction yet.</p>
+              <a href="{% url 'gut_reaction_create' meal.pk %}"
+                 class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-plus me-1"></i>Add Gut Reaction
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="{% url 'meal_list' %}" class="btn btn-secondary mt-4">
+      <i class="fas fa-arrow-left me-1"></i>Back to Meal List
+    </a>
+  </div>
 {% endblock content %}
+{% block extra_css %}
+  <style>
+    .rating {
+      display: inline-block;
+      margin-left: 10px;
+    }
+  </style>
+{% endblock extra_css %}

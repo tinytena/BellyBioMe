@@ -4,11 +4,19 @@ from .models import Meal
 from .forms import MealForm, FeedbackForm, GutReactionForm
 import requests
 from django.http import JsonResponse
+import environ
+import logging
+
+env = environ.Env()
+
+logger = logging.getLogger(__name__)
+
+USDA_FOODATA_API = env("USDA_FOODATA_API")
 
 
 @login_required
 def meal_list(request):
-    meals = Meal.objects.filter(user=request.user)
+    meals = Meal.objects.filter(user=request.user).order_by("meal_type", "-date")
     return render(request, "nutrition/meal_list.html", {"meals": meals})
 
 
@@ -87,38 +95,62 @@ def gut_reaction_create(request, pk):
 
 
 @login_required
-def scan_barcode(request):
-    return render(request, "nutrition/scan_barcode.html")
+def get_food_by_sr_legacy_keywords(request, keyword):
+    url = "https://api.nal.usda.gov/fdc/v1/foods/search"
+    params = {
+        "query": keyword,
+        "dataType": ["SR Legacy"],
+        "pageSize": 10,
+        "api_key": USDA_FOODATA_API,
+    }
+    response = requests.get(url, params=params)
 
-
-@login_required
-def get_food_by_barcode(request, barcode):
-    url = f"https://world.openfoodfacts.org/api/v0/product/{barcode}.json"
-    response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        if data.get("status") == 1:
-            product = data["product"]
-            food_data = {
-                "name": product.get("product_name"),
-                "calories": product.get("nutriments", {}).get("energy-kcal_100g"),
-                "nutrients": {
-                    "fat": product.get("nutriments", {}).get("fat_100g"),
-                    "saturated_fat": product.get("nutriments", {}).get(
-                        "saturated-fat_100g"
+        if data.get("foods"):
+            results = []
+            for food_item in data["foods"]:
+                food_data = {
+                    "name": food_item.get("description"),
+                    "calories": next(
+                        (
+                            nutrient["value"]
+                            for nutrient in food_item["foodNutrients"]
+                            if nutrient["nutrientId"] == 1008
+                        ),
+                        None,
                     ),
-                    "carbohydrates": product.get("nutriments", {}).get(
-                        "carbohydrates_100g"
-                    ),
-                    "sugars": product.get("nutriments", {}).get("sugars_100g"),
-                    "fiber": product.get("nutriments", {}).get("fiber_100g"),
-                    "proteins": product.get("nutriments", {}).get("proteins_100g"),
-                    "salt": product.get("nutriments", {}).get("salt_100g"),
-                },
-            }
-            return JsonResponse(food_data)
+                    "nutrients": {
+                        "fat": next(
+                            (
+                                nutrient["value"]
+                                for nutrient in food_item["foodNutrients"]
+                                if nutrient["nutrientId"] == 204
+                            ),
+                            None,
+                        ),
+                        "carbohydrates": next(
+                            (
+                                nutrient["value"]
+                                for nutrient in food_item["foodNutrients"]
+                                if nutrient["nutrientId"] == 205
+                            ),
+                            None,
+                        ),
+                        "proteins": next(
+                            (
+                                nutrient["value"]
+                                for nutrient in food_item["foodNutrients"]
+                                if nutrient["nutrientId"] == 203
+                            ),
+                            None,
+                        ),
+                    },
+                }
+                results.append(food_data)
+            return JsonResponse({"results": results})
         else:
-            return JsonResponse({"error": "Food item not found"}, status=404)
+            return JsonResponse({"error": "No matching food items found"}, status=404)
     else:
         return JsonResponse(
             {"error": "API request failed"}, status=response.status_code

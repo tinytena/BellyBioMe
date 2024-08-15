@@ -13,8 +13,9 @@ urlpatterns = [
         views.gut_reaction_create,
         name="gut_reaction_create",
     ),
-    path("scan-barcode/", views.scan_barcode, name="scan_barcode"),
     path(
-        "api/food/<str:barcode>/", views.get_food_by_barcode, name="get_food_by_barcode"
+        "api/food/search-sr-legacy/<str:keyword>/",
+        views.get_food_by_sr_legacy_keywords,
+        name="get_food_by_sr_legacy_keywords",
     ),
 ]

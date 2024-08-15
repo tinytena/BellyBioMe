@@ -1,23 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>My Meals</h1>
-  <a href="{% url 'meal_create' %}" class="btn btn-primary mb-3">Add New Meal</a>
-  <a href="{% url 'scan_barcode' %}" class="btn btn-secondary p-2">Scan Barcode</a>
-  <div class="row">
-    {% for meal in meals %}
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{ meal.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ meal.get_meal_type_display }} - {{ meal.date }}</h6>
-            <p class="card-text">{{ meal.calories }} calories</p>
-            <a href="{% url 'meal_detail' meal.pk %}" class="card-link">View Details</a>
-          </div>
-        </div>
+  <div class="container mt-4">
+    <h1 class="mb-4">My Meals</h1>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <a href="{% url 'meal_create' %}" class="btn btn-primary me-2">Add New Meal</a>
       </div>
-    {% empty %}
-      <p>No meals logged yet. Start by adding a new meal!</p>
-    {% endfor %}
+      <div class="col-md-6">
+        <form class="d-flex" action="{% url 'meal_list' %}" method="get">
+          <input class="form-control me-2"
+                 type="search"
+                 placeholder="Search meals"
+                 aria-label="Search"
+                 name="search" />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+    {% if meals %}
+      <div class="accordion" id="mealAccordion">
+        {% regroup meals by meal_type as meal_list %}
+        {% for meal_type in meal_list %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+              <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapse{{ forloop.counter }}"
+                      aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                      aria-controls="collapse{{ forloop.counter }}">
+                {{ meal_type.grouper|title }} ({{ meal_type.list|length }})
+              </button>
+            </h2>
+            <div id="collapse{{ forloop.counter }}"
+                 class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+                 aria-labelledby="heading{{ forloop.counter }}"
+                 data-bs-parent="#mealAccordion">
+              <div class="accordion-body">
+                <div class="row">
+                  {% for meal in meal_type.list %}
+                    <div class="col-md-6 col-lg-4 mb-3">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ meal.name }}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">{{ meal.date|date:"F d, Y" }}</h6>
+                          <p class="card-text">{{ meal.calories }} calories</p>
+                          <a href="{% url 'meal_detail' meal.pk %}"
+                             class="btn btn-sm btn-outline-primary">View Details</a>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info" role="alert">No meals logged yet. Start by adding a new meal!</div>
+    {% endif %}
   </div>
 {% endblock content %}

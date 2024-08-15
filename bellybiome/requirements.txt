@@ -23,6 +23,7 @@ django-compressor==4.5.1  # https://github.com/django-compressor/django-compress
 django-redis==5.4.0  # https://github.com/jazzband/django-redis
 
 psycopg2-binary==2.9.9
+django-widget-tweaks==1.5.0
 
 # Django
 # ------------------------------------------------------------------------------
